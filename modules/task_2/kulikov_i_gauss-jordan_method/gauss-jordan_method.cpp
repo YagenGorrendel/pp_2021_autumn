@@ -149,6 +149,6 @@ double* gauss_jordan_finding_1_proc(double* matrix, int sz) {
     for (int i = 0; i < sz; i++) {
         res[i] = matrix[(i + 1) * (sz + 1) - 1] / matrix[i * (sz + 1) + i];
     }
-    
+
     return res;
 }
