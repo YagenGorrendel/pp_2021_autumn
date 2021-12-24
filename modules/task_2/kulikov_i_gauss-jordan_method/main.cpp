@@ -164,6 +164,8 @@ TEST(MPIGaussJordanMethod, RandomVecExample_1000x1000) {
     std::random_device dev;
     std::mt19937 gen(dev());
 
+    double T1, T2, start, end;
+
     const int sz = 1000;
     int rank;
     int* vec = nullptr;
@@ -181,14 +183,36 @@ TEST(MPIGaussJordanMethod, RandomVecExample_1000x1000) {
         }
 
         matrix = get_random_matrix(vec, sz);
+        start = MPI_Wtime();
     }
 
     result = gauss_jordan_finding(matrix, sz);
 
     if (rank == 0) {
+        end = MPI_Wtime();
+        T1 = end - start;
+
         for (int i = 0; i < sz; i++) {
             ASSERT_NEAR(vec[i], result[i], 0.001);
         }
+        std::cout << T1;
+    }
+
+    if (rank == 0) {
+        start = MPI_Wtime();
+
+        result = gauss_jordan_finding_1_proc(matrix, sz);
+
+        end = MPI_Wtime();
+
+        for (int i = 0; i < sz; i++) {
+            ASSERT_NEAR(vec[i], result[i], 0.001);
+        }
+        std::cout << '\n';
+
+        T2 = end - start;
+
+        std::cout << T2;
     }
 
     delete [] vec;

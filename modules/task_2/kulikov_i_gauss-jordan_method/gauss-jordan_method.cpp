@@ -111,7 +111,12 @@ double* gauss_jordan_finding(double* matrix, int sz) {
 
     if (rank == root) {
         for (int i = 0; i < sz; i++) {
-            res[i] = matrix[(i + 1) * (sz + 1) - 1] / matrix[i * (sz + 1) + i];
+            if (matrix[(i + 1) * (sz + 1) - 1] != 0) {
+                res[i] = matrix[(i + 1) * (sz + 1) - 1]
+                / matrix[i * (sz + 1) + i];
+            } else {
+                res[i] = 0;
+            }
         }
     }
 
@@ -120,5 +125,30 @@ double* gauss_jordan_finding(double* matrix, int sz) {
     delete [] buffer;
     delete [] subtrahend;
 
+    return res;
+}
+
+
+double* gauss_jordan_finding_1_proc(double* matrix, int sz) {
+    double* subtrahend = new double[sz + 1];
+
+    for (int i = 0; i < sz; i++) {
+        std::copy(matrix + (i * (sz + 1)), matrix + (i + 1) * (sz + 1),
+        subtrahend);
+        double coeff = matrix[i * (sz + 1) + i] / subtrahend[i];
+
+        for (int j = 0; j < sz + 1; j ++) {
+            matrix[i * (sz + 1) + j] -= coeff * subtrahend[j];
+        }
+
+        std::copy(subtrahend, subtrahend + sz + 1, matrix + (i * (sz + 1)));
+    }
+
+    double* res = new double[sz];
+
+    for (int i = 0; i < sz; i++) {
+        res[i] = matrix[(i + 1) * (sz + 1) - 1] / matrix[i * (sz + 1) + i];
+    }
+    
     return res;
 }
