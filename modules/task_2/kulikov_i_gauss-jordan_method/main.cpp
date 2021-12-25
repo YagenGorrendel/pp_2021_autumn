@@ -227,7 +227,6 @@ TEST(MPIGaussJordanMethod, RandomVecExample_1000x1000) {
     MPI_Barrier(MPI_COMM_WORLD);
 }
 
-
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     MPI_Init(&argc, &argv);

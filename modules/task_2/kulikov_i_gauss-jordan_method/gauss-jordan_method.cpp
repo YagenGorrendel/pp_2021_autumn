@@ -4,7 +4,6 @@
 #include <iostream>
 #include "../../../modules/task_2/kulikov_i_gauss-jordan_method/gauss-jordan_method.h"
 
-
 double* get_random_matrix(int* num_vec, int sz) {
     std::random_device dev;
     std::mt19937 gen(dev());
@@ -21,7 +20,6 @@ double* get_random_matrix(int* num_vec, int sz) {
     return out_matrix;
 }
 
-
 void division_in_str(double* strings, double* subtrahend, int num,
 int sz, int part) {
     for (int i = 0; i < part; i++) {
@@ -31,7 +29,6 @@ int sz, int part) {
         }
     }
 }
-
 
 double* gauss_jordan_finding(double* matrix, int sz) {
     int root = 0, rank = 0, commSize = 0;
